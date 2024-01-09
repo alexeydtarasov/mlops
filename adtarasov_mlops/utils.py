@@ -52,8 +52,8 @@ def get_model_metrics(
 
 def push_model(model_path: str = 'models/'):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    subprocess.run(["dvc", "add", model_path])
+    subprocess.run(["dvc", "add", model_path, 'rf.joblib'])
     subprocess.run(["dvc", "push"])
-    subprocess.run(["git", "add", model_path])
+    subprocess.run(["git", "add", model_path, 'rf.joblib'])
     subprocess.run(["git", "commit", "-m", f"'{now} train model added'"])
     subprocess.run(['git', 'push'])
