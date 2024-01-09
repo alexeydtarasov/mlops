@@ -1,2 +1,8 @@
-train:
-  data_path: data/insurance.csv
+data:
+  dataset_path: data/insurance.csv
+models:
+  models_path: models
+  models_dump_name: rf.joblib
+results:
+  predictions_path: results/predictions.csv
+  metrics_path: results/metrics.json

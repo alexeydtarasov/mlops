@@ -1,5 +1,5 @@
 outs:
-- md5: 38167486e7037e03f7b443625ffc5739
-  size: 9747377
+- md5: 132f961e3748746aaaa8e13d1ffc0974
+  size: 9749825
   hash: md5
   path: rf.joblib

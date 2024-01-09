@@ -1,7 +1,8 @@
-import pandas as pd
-
+import json
 from dataclasses import dataclass
 from typing import Dict, Union
+
+import pandas as pd
 
 
 @dataclass
@@ -18,3 +19,14 @@ class Metrics:
     r2: float
     mse: float
     mae: float
+
+    def to_json(self):
+        return json.dumps(
+            {
+                'model_params': self.model_params,
+                'r2_score': self.r2,
+                'mse': self.mse,
+                'mae': self.mae,
+            },
+            indent=4,
+        )
