@@ -27,7 +27,6 @@ def train(data_path: str = None):
     print(model_metrics)
     print("Saving model")
     utils.save_model(model)
-    utils.push_model()
 
 
 if __name__ == '__main__':

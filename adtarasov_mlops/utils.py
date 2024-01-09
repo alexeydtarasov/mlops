@@ -2,6 +2,7 @@ import joblib
 import subprocess
 import datetime
 import pandas as pd
+from typing import Union, Tuple
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -12,9 +13,11 @@ import classes
 
 def save_model(model: RandomForestRegressor, path: str = 'models/rf.joblib'):
     joblib.dump(model, path)
+    push_model()
 
 
 def load_model(path: str = 'models/rf.joblib') -> RandomForestRegressor:
+    pull_model()
     return joblib.load(path)
 
 
@@ -39,15 +42,25 @@ def get_dataset(
 
 
 def get_model_metrics(
-    dataset: classes.Dataset, model: RandomForestRegressor, model_params: dict
-) -> classes.Metrics:
+    dataset: classes.Dataset,
+    model: RandomForestRegressor,
+    model_params: dict,
+    return_preds: bool = False,
+) -> Union[classes.Metrics, Tuple[pd.Series, classes.Metrics]]:
     y_pred = model.predict(dataset.X_test)
-    return classes.Metrics(
+    metrics = classes.Metrics(
         model_params,
         r2=r2_score(dataset.y_test, y_pred),
         mse=mean_squared_error(dataset.y_test, y_pred),
         mae=mean_absolute_error(dataset.y_test, y_pred),
     )
+    if not return_preds:
+        return metrics
+    return (y_pred, metrics)
+
+
+def pull_model(path: str = 'models/rf.joblib'):
+    subprocess.call(['dvc', 'pull', '--force', '--with-deps', path])
 
 
 def push_model(model_path: str = 'models/'):
